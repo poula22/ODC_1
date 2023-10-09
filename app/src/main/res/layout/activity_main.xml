@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/txt_live_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Live Data"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_live_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test Live data"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_live_data" />
+
+
+        <TextView
+            android:id="@+id/txt_state_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="State flow"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_live_data" />
+
+        <Button
+            android:id="@+id/btn_state_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test State Flow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_state_flow" />
+
+
+        <TextView
+            android:id="@+id/txt_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flow"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_state_flow" />
+
+        <Button
+            android:id="@+id/btn_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test Flow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_flow" />
+
+
+        <TextView
+            android:id="@+id/txt_shared_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shared Flow"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_flow" />
+
+        <Button
+            android:id="@+id/btn_shared_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test Shared Flow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_shared_flow" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
