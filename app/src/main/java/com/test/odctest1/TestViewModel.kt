@@ -14,13 +14,35 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class TestViewModel:ViewModel() {
+
+    //liveData ->
+    /*
+    * Hot Stream - Live Cycle awareness
+    * can't survive against configuration change
+    * behavior subscriber (send last emitted data to new subscribers)
+    */
     private val _testLiveData=MutableLiveData<String>()
     val testLiveData:LiveData<String>
         get() = _testLiveData
 
+    //StateFlow ->
+    /*
+    * Hot Stream - can be modified to Live Cycle awareness
+    * can't survive against configuration change
+    * behavior subscriber (send last emitted data to new subscribers)
+    * check if subscriber has the last value or not each time
+    */
+
     private val _testStateFlow= MutableStateFlow<String>("State flow")
     val testStatedFlow:StateFlow<String>
         get() = _testStateFlow
+
+    //SharedFlow ->
+    /*
+    * Hot Stream - can be modified to Live Cycle awareness
+    * can't survive against configuration change
+    * publisher subscriber (doesn't send data to new subscribers)
+    */
 
     private val _testSharedFlow= MutableSharedFlow<String>()
     val testSharedFlow: SharedFlow<String>
@@ -32,6 +54,13 @@ class TestViewModel:ViewModel() {
             _testLiveData.value=value
         }
     }
+
+    //Flow ->
+    /*
+    * Cold Stream - can be modified to Live Cycle awareness
+    * can't survive against configuration change
+    * publisher subscriber (doesn't send data to new subscribers)
+    */
 
     fun changeTextWithFlow(value:String)=
         flow{
