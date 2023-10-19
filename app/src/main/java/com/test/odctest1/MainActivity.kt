@@ -6,22 +6,22 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
+import com.google.android.material.snackbar.Snackbar
 import com.test.odctest1.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var  testViewModel:TestViewModel
-
+    private val  testViewModel:TestViewModel by lazy { ViewModelProvider(this).get(TestViewModel::class.java) }
+    private val  binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_main)
-        testViewModel=ViewModelProvider(this).get(TestViewModel::class.java)
-        subscribeToObservers(binding)
+        subscribeToObservers()
         binding.btnFlow.setOnClickListener {
             lifecycleScope.launch {
-                testViewModel.changeTextWithFlow("flow changed").collect{
+                testViewModel.changeTextWithFlow().collect{
                     Log.i("test info","fired F")
+                    Snackbar.make(binding.btnFlow,it,LENGTH_SHORT).show()
                     binding.txtFlow.text=it
                 }
             }
@@ -37,24 +37,28 @@ class MainActivity : AppCompatActivity() {
             testViewModel.changeTextWithStateFlow("state flow changed")
         }
 
+
     }
 
-    private fun subscribeToObservers(binding: ActivityMainBinding) {
+    private fun subscribeToObservers() {
         testViewModel.testLiveData.observe(this){
             Log.i("test info","fired L")
+            Snackbar.make(binding.btnLiveData,it,LENGTH_SHORT).show()
             binding.txtLiveData.text=it
         }
 
         lifecycleScope.launch {
             testViewModel.testStatedFlow.collect{
             Log.i("test info","fired S")
+                Snackbar.make(binding.btnStateFlow,it,LENGTH_SHORT).show()
                 binding.txtStateFlow.text=it
             }
         }
 
         lifecycleScope.launch {
             testViewModel.testSharedFlow.collect{
-            Log.i("test info","fired SH")
+                Log.i("test info","fired SH")
+                Snackbar.make(binding.btnSharedFlow,it,LENGTH_SHORT).show()
                 binding.txtSharedFlow.text=it
             }
         }

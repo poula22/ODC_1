@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,12 @@ class TestViewModel:ViewModel() {
     * Hot Stream - Live Cycle awareness
     * can't survive against configuration change
     * behavior subscriber (send last emitted data to new subscribers)
+    * main thread only
+    * java support
+    *leak resources issue
+    * nullable types
     */
+
     private val _testLiveData=MutableLiveData<String>()
     val testLiveData:LiveData<String>
         get() = _testLiveData
@@ -48,35 +54,28 @@ class TestViewModel:ViewModel() {
     val testSharedFlow: SharedFlow<String>
         get() = _testSharedFlow
 
-
     fun changeTextWithLiveData(value:String){
-        viewModelScope.launch {
-            _testLiveData.value=value
-        }
+        viewModelScope.launch{ _testLiveData.value=value }
     }
-
     //Flow ->
     /*
     * Cold Stream - can be modified to Live Cycle awareness
     * can't survive against configuration change
     * publisher subscriber (doesn't send data to new subscribers)
     */
-
-    fun changeTextWithFlow(value:String)=
-        flow{
-                emit(value)
+    fun changeTextWithFlow()= flow{
+        repeat(5) {
+            emit(it.toString())
+            delay(500)
         }
 
+    }
     fun changeTextWithStateFlow(value:String){
         viewModelScope.launch {
             _testStateFlow.value=value
         }
     }
-
     fun changeTextWithSharedFlow(value:String){
-        viewModelScope.launch {
-            _testSharedFlow.emit(value)
-        }
+        viewModelScope.launch { _testSharedFlow.emit(value) }
     }
-
 }
